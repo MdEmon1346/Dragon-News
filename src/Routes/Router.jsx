@@ -2,6 +2,9 @@ import { createBrowserRouter } from "react-router";
 import HomeLayout from "../LayOutes/HomeLayout";
 import Home from "../components/homeLayout/Pages/Home";
 import CategoryNews from "../components/homeLayout/Pages/CategoryNews";
+import Login from "../components/homeLayout/Pages/Login";
+import Register from "../components/homeLayout/Pages/Register";
+import AuthLayout from "../LayOutes/AuthLayout";
 
 const Router = createBrowserRouter([
   {
@@ -17,7 +20,7 @@ const Router = createBrowserRouter([
         element: <CategoryNews></CategoryNews>,
         loader: async () => {
           const res = await fetch("/news.json");
-          const data = await res.json(); // ✅ JSON parse করে array return করো
+          const data = await res.json();
           return data;
         },
         HydrateFallback: () => (
@@ -30,7 +33,17 @@ const Router = createBrowserRouter([
   },
   {
     path: "/auth",
-    element: <h2>Authentication Layout</h2>,
+    element: <AuthLayout></AuthLayout>,
+    children: [
+      {
+        path: "/auth/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/auth/register",
+        element: <Register></Register>,
+      },
+    ],
   },
   {
     path: "/news",
