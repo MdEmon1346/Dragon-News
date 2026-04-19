@@ -1,7 +1,8 @@
 import { FaBookmark, FaShareAlt, FaStar, FaEye } from "react-icons/fa";
+import { Link } from "react-router";
 
 const NewsCard = ({ news }) => {
-  const { title, author, thumbnail_url, details, rating, total_view } = news;
+  const { _id, title, author, thumbnail_url, details, rating, total_view } = news;
 
   // Generate star rating display
   const renderStars = (num) => {
@@ -174,7 +175,7 @@ const NewsCard = ({ news }) => {
           }}
         >
           {truncate(details, 220)}{" "}
-          <span
+          <Link to={`/news-details/${news._id}`}
             style={{
               color: "#f97316",
               fontWeight: "600",
@@ -183,7 +184,7 @@ const NewsCard = ({ news }) => {
             }}
           >
             Read More
-          </span>
+          </Link>
         </p>
       </div>
 

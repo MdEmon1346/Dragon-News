@@ -5,6 +5,8 @@ import CategoryNews from "../components/homeLayout/Pages/CategoryNews";
 import Login from "../components/homeLayout/Pages/Login";
 import Register from "../components/homeLayout/Pages/Register";
 import AuthLayout from "../LayOutes/AuthLayout";
+import NewsDetails from "../components/homeLayout/Pages/NewsDetails";
+import PrivateRoute from "../Provider/PrivateRoute";
 
 const Router = createBrowserRouter([
   {
@@ -46,8 +48,20 @@ const Router = createBrowserRouter([
     ],
   },
   {
-    path: "/news",
-    element: <h2>News Layout</h2>,
+    path: "/news-details/:id",
+    element: <PrivateRoute>
+      <NewsDetails></NewsDetails>,
+    </PrivateRoute>,
+    loader: async () => {
+      const res = await fetch("/news.json");
+      const data = await res.json();
+      return data;
+    },
+    HydrateFallback: () => (
+      <div style={{ textAlign: "center", padding: "2rem" }}>
+        Loading news...
+      </div>
+    ),
   },
   {
     path: "/*",
